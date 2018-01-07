@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<addon addon_id="identifyUserSeeingForumPo" title="[kiror] Identify user seeing forum posts" version_string="0.0" version_id="0" url="https://github.com/adlerosn/" install_callback_class="" install_callback_method="" uninstall_callback_class="" uninstall_callback_method="">
+  <admin_navigation/>
+  <admin_permissions/>
+  <admin_style_properties/>
+  <admin_templates/>
+  <admin_template_modifications/>
+  <code_events/>
+  <code_event_listeners/>
+  <cron/>
+  <email_templates/>
+  <email_template_modifications/>
+  <optiongroups/>
+  <permissions>
+    <permission_groups/>
+    <permissions/>
+    <interface_groups/>
+  </permissions>
+  <phrases/>
+  <route_prefixes/>
+  <style_properties/>
+  <templates>
+    <template title="message_watermark_by_kiror" version_id="0" version_string="0.0"><![CDATA[<style>
+.message div span.item.muted:before{
+	content:"Displaying to “{$visitor.username}” ({$visitor.user_id})";
+	color: {xen:property mutedTextColor};
+	position: absolute;
+	overflow: hidden;
+	margin-top: 12px;
+	font-size: 10px;
+	opacity: 0.05;
+}
+.message .messageContent:before{
+	content:"{$visitor.user_id} - “{$visitor.username}”";
+	color: {xen:property mutedTextColor};
+	position: absolute;
+	overflow: hidden;
+	font-size: 10px;
+	transform-origin: left top;
+	transform: rotate(90deg);
+	opacity: 0.05;
+}
+</style>]]></template>
+  </templates>
+  <public_template_modifications>
+    <modification template="thread_view" modification_key="addWatermarkOnMessage" description="Adds watermark on message" execution_order="10" enabled="1" action="preg_replace">
+      <find><![CDATA[/<.*?class=".*?messageList.*?".*?id=".*?messageList.*?".*?>.*?$/m]]></find>
+      <replace><![CDATA[$0
+		<xen:include template="message_watermark_by_kiror" />]]></replace>
+    </modification>
+  </public_template_modifications>
+  <bb_code_media_sites/>
+  <bb_codes/>
+</addon>
